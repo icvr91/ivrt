@@ -53,21 +53,18 @@
                 const timeline = [
                     // { month: "December", year: 2025 },
                     // { month: "November", year: 2025 },
-                    { month: "October", year: 2025 },
+                    { monthName: "October", monthNum: 10, year: 2025 },
                     // You can easily add past or future years here, e.g., { month: "December", year: 2024 },
                 ]; 
                 
                 const grid = document.getElementById('month-grid');
 
                 timeline.forEach((item) => {
-                    const month = item.month;
-                    const year = item.year;
+                    const month = item.monthName;
+                    const year = item.year; 
                     
-                    // Normalize month name for file path
-                    const monthSlug = month.toLowerCase(); 
-                    
-                    // Determine the link target (e.g., 'october-2025.html')
-                    const linkTarget = `${monthSlug}-${year}.html`;
+                    // Determine the link target (e.g., '2025-10.html')
+                    const linkTarget = `months/${year}-${item.monthNum}.html`;
 
                     // Generate the display text (e.g., "Oct 2025")
                     const displayText = `${month.substring(0, 3)} ${year}`;
@@ -99,16 +96,39 @@
 
     <!-- Footer -->
     <footer class="bg-secondary-dark text-gray-400 text-center py-4 mt-auto">
-        <p class="text-sm">
-            &copy; 2025 ICVR91 | 
-            <!-- X Link with necessary security attributes -->
-            <a href="https://x.com/icvr91" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="text-accent-gold hover:text-white transition duration-200">
-                Follow us on X
-            </a>
+        <!-- The content of this paragraph will be updated by the new script -->
+        <p id="copyright-text" class="text-sm">
+            <!-- JavaScript will set the full copyright string here -->
         </p>
+        <script>function updateCopyrightYear() {
+            const startYear = 2025; // The year the project started
+            const currentYear = new Date().getFullYear();
+            let yearDisplay;
+
+            if (currentYear > startYear) {
+                // If current year is later, show the range: 2025-2027
+                yearDisplay = `${startYear}-${currentYear}`;
+            } else {
+                // If current year is 2025 or earlier, show only the start year: 2025
+                yearDisplay = startYear;
+            }
+
+            const copyrightTextElement = document.getElementById('copyright-text');
+            
+            // Construct the full HTML content for the footer, including the X link
+            copyrightTextElement.innerHTML = `
+                &copy; ${yearDisplay} ICVR91 | 
+                <a href="https://x.com/icvr91" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="text-accent-gold hover:text-white transition duration-200">
+                    Follow us on X
+                </a>
+            `;
+        }
+
+        // Run the function when the page loads
+        updateCopyrightYear();</script>
     </footer>
 
 </body>
